@@ -1,5 +1,5 @@
 ---
-title: 简介|About
+title: 简介
 date: 2016-02-21 16:59:52
 ---
 # 关于Blog
