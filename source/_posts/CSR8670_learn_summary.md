@@ -1,5 +1,5 @@
 ---
-title: CSR8670_learn_summary
+title: CSR8670学习总结
 date: 2016-02-24 09:25:00
 tags: Bluetooth
 ---
