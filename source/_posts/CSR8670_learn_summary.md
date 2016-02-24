@@ -3,7 +3,7 @@ title: CSR8670_learn_summary
 date: 2016-02-24 09:25:00
 tags: Bluetooth
 ---
-#CSR8670介绍
+# CSR8670介绍
 
 [CSR8670™](http://www.csr.com/cn/products/csr8670) 是一款音频片上系统 (SoC) 解决方案，配有无线连接功能、嵌入式闪存和集成式触控传感器，使功能丰富的家庭娱乐系统和可穿戴音频产品能够带来无与伦比的用户体验和卓越的音频性能。
 
@@ -21,17 +21,17 @@ Kalimba  DSP一般被用来处理音频数据,能被Developer写代码操作寄�
 
 **VM Application**：也是跑在**XAP Processor**上的代码，但是跑在**CSR Firmware**的一个**Sandbox area**，对硬件的访问能力有限。有个特点就是只有在Firmware不忙的时候才运行，实时性较差。
  
-![processor architecture](/imgs/processor_architecture.bmp)
+![processor architecture](/imgs/CSR8670_learn_summary/processor_architecture.bmp)
 
 
 
-#ROM的组成
-![rom](/imgs/rom.bmp)
+# ROM的组成
+![rom](/imgs/CSR8670_learn_summary/rom.bmp)
 ROM包括Filessystem 和 CSR Firmware两大块。Filessystem 由VM Application、DSP Application和其它一些数据文件组成。
 蓝牙协议栈和硬件控制代码构成Firmware。
 
-#VM Application示例
-![architecture of the application](/imgs/architecture_of_the_application.bmp)
+# VM Application示例
+![architecture of the application](/imgs/CSR8670_learn_summary/architecture_of_the_application.bmp)
 
 VM Application由c语言实现，调用现成的蓝牙的库函数，由于提供了库函数源码，理论上也是可以去修改的。通过tasks 和messages去调度程序执行。
 
