@@ -174,7 +174,7 @@ MediaScannerService对外提供的接口极少，其它应用要么通知整个v
 http://review.cyanogenmod.org/#/c/149144/
 ![](/imgs/CMFileManager-bug-analysis/modify.png)
 
-# 0x05 相关连接
+# 0x05 相关链接
 
 http://review.cyanogenmod.org/#/c/149144/
 http://www.cnblogs.com/skywang12345/p/3474206.html
