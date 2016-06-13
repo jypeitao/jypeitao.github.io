@@ -1,7 +1,7 @@
 ---
 title: CTS sensor code learn
 date: 2016-06-07 19:54:25
-tags:
+tags: [CTS, Android]
 ---
 # 0x00 前言
 ----
