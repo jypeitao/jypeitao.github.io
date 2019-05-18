@@ -1,0 +1,555 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  
+    <title>Android 模拟器 | Peter&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Peter">
+    
+
+    
+    <meta name="description" content="自从做手机项目以后就再没用过Android的模拟器啦。一个是有许多定制，模拟器不一定能跑起来。最重要的是，项目有相应的真机用来开发。 Android模拟器对APP开发还是很有用的。 Official Android Emulator在我的Ubuntu系统上跑不起来，CPU不支持KVM。之前在Windows下用过，不过感觉有点卡。 Genymotion是一款著名的Android模拟器。 Genymo">
+<meta name="keywords" content="Tools">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 模拟器">
+<meta property="og:url" content="http://jypeitao.github.io/2016/03/10/genymotion-for-android/index.html">
+<meta property="og:site_name" content="Peter&#39;s Blog">
+<meta property="og:description" content="自从做手机项目以后就再没用过Android的模拟器啦。一个是有许多定制，模拟器不一定能跑起来。最重要的是，项目有相应的真机用来开发。 Android模拟器对APP开发还是很有用的。 Official Android Emulator在我的Ubuntu系统上跑不起来，CPU不支持KVM。之前在Windows下用过，不过感觉有点卡。 Genymotion是一款著名的Android模拟器。 Genymo">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://jypeitao.github.io/imgs/genymotion-for-android/photo-equpe.jpg">
+<meta property="og:image" content="http://jypeitao.github.io/imgs/genymotion-for-android/vb_install.png">
+<meta property="og:image" content="http://jypeitao.github.io/imgs/genymotion-for-android/vb_run.png">
+<meta property="og:image" content="http://jypeitao.github.io/imgs/genymotion-for-android/genymotion.png">
+<meta property="og:image" content="http://jypeitao.github.io/imgs/genymotion-for-android/genymotion_download_vd.png">
+<meta property="og:updated_time" content="2019-05-18T14:20:35.111Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 模拟器">
+<meta name="twitter:description" content="自从做手机项目以后就再没用过Android的模拟器啦。一个是有许多定制，模拟器不一定能跑起来。最重要的是，项目有相应的真机用来开发。 Android模拟器对APP开发还是很有用的。 Official Android Emulator在我的Ubuntu系统上跑不起来，CPU不支持KVM。之前在Windows下用过，不过感觉有点卡。 Genymotion是一款著名的Android模拟器。 Genymo">
+<meta name="twitter:image" content="http://jypeitao.github.io/imgs/genymotion-for-android/photo-equpe.jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Peter&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Peter&#39;s Blog" title="Peter&#39;s Blog"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Peter&#39;s Blog">Peter&#39;s Blog</a></h1>
+				<h2 class="blog-motto">Talk is cheap, show me the code.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页|Home</a></li>
+					
+						<li><a href="/archives">归档|Archives</a></li>
+					
+						<li><a href="/about">简介|About</a></li>
+					
+					<li>
+ 					
+					
+					</li>
+				</ul>
+			</ul></nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/03/10/genymotion-for-android/" title="Android 模拟器" itemprop="url">Android 模拟器</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Peter" target="_blank" itemprop="author">Peter</a>
+		
+  </p><p class="article-time">
+    <time datetime="2016-03-10T07:33:56.000Z" itemprop="datePublished"> 发表于 2016-03-10</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Genymotion介绍"><span class="toc-number">1.</span> <span class="toc-text">Genymotion介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Ubuntu14-04下安装Genymotion"><span class="toc-number">2.</span> <span class="toc-text">Ubuntu14.04下安装Genymotion</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Genymotion账号注册"><span class="toc-number">2.1.</span> <span class="toc-text">1. Genymotion账号注册</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Virtual-box-安装"><span class="toc-number">2.2.</span> <span class="toc-text">2. Virtual box 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Genymotion安装"><span class="toc-number">2.3.</span> <span class="toc-text">3. Genymotion安装</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Android-studio的Genymotion-Plugin安装"><span class="toc-number">3.</span> <span class="toc-text">Android studio的Genymotion Plugin安装</span></a></li></ol>
+		
+		</div>
+		
+		<p>自从做手机项目以后就再没用过Android的模拟器啦。一个是有许多定制，模拟器不一定能跑起来。最重要的是，项目有相应的真机用来开发。</p>
+<p>Android模拟器对APP开发还是很有用的。</p>
+<p>Official Android Emulator在我的Ubuntu系统上跑不起来，CPU不支持KVM。之前在Windows下用过，不过感觉有点卡。</p>
+<p>Genymotion是一款著名的Android模拟器。</p>
+<h1 id="Genymotion介绍"><a href="#Genymotion介绍" class="headerlink" title="Genymotion介绍"></a>Genymotion介绍</h1><p>Genymotion是由一家叫<a href="http://www.genymobile.com" target="_blank" rel="noopener">genymobile</a>的公司开发。<br><img src="/imgs/genymotion-for-android/photo-equpe.jpg" alt></p>
+<p>Genymotion号称最快的模拟器，实际上说它是一个虚拟机更合适。可以在<a href="http://www.genymobile.com/genymotion/" target="_blank" rel="noopener">Genymotion</a>页面看到官方的介绍。</p>
+<blockquote>
+</blockquote>
+<p>Make better Apps with the fastest Emulator in the world</p>
+<h1 id="Ubuntu14-04下安装Genymotion"><a href="#Ubuntu14-04下安装Genymotion" class="headerlink" title="Ubuntu14.04下安装Genymotion"></a>Ubuntu14.04下安装Genymotion</h1><h2 id="1-Genymotion账号注册"><a href="#1-Genymotion账号注册" class="headerlink" title="1. Genymotion账号注册"></a>1. Genymotion账号注册</h2><p><a href="https://www.genymotion.com/account/create/" target="_blank" rel="noopener">点击这里创建账号</a></p>
+<h2 id="2-Virtual-box-安装"><a href="#2-Virtual-box-安装" class="headerlink" title="2. Virtual box 安装"></a>2. Virtual box 安装</h2><blockquote>
+</blockquote>
+<p>Genymotion operation relies on the use of Oracle VM VirtualBox in the background. This enables virtualizing Android operating systems. If you do not already have Oracle VM VirtualBox installed, you will be asked to do so prior to installing Genymotion.<br><strong>If you already have Oracle VM VirtualBox, note that we recommend version 5.0.4 or above.</strong></p>
+<p>官方推荐版本是5.04或者更高。<br>可以通过apt-get的方式安装，但是用Ubuntu14.04默认的source安装的版本比较老。<br>选择直接下载最新版本virtualbox-5.0_5.0.16-105871-Ubuntu-trusty_amd64.deb<br><a href="https://www.virtualbox.org/wiki/Linux_Downloads" target="_blank" rel="noopener">官方下载地址</a></p>
+<p>下载下来之后，直接双击通过软件中心安装。<br><img src="/imgs/genymotion-for-android/vb_install.png" alt></p>
+<p>运行起来之后如下图<br><img src="/imgs/genymotion-for-android/vb_run.png" alt></p>
+<h2 id="3-Genymotion安装"><a href="#3-Genymotion安装" class="headerlink" title="3. Genymotion安装"></a>3. Genymotion安装</h2><p>进入<a href="https://www.genymotion.com/download/" target="_blank" rel="noopener">Genymotion download </a> 下载对应的版本。<br>我下载的是genymotion-2.6.0-linux_x64.bin</p>
+<p>sudo chmod +x genymotion-2.6.0-linux_x64.bin &amp;&amp; ./genymotion-2.6.0-linux_x64.bin</p>
+<p>命令行下运行：<br>./genymotion</p>
+<p><img src="/imgs/genymotion-for-android/genymotion.png" alt></p>
+<p>genymotion界面很简介，各个按钮功能也很清楚。<br>首先用之前注册的账号登陆一下，然后点击Add按钮，会列出很多可用的virtual devices，选择之后开始下载。</p>
+<p><img src="/imgs/genymotion-for-android/genymotion_download_vd.png" alt></p>
+<h1 id="Android-studio的Genymotion-Plugin安装"><a href="#Android-studio的Genymotion-Plugin安装" class="headerlink" title="Android studio的Genymotion Plugin安装"></a>Android studio的Genymotion Plugin安装</h1><p><a href="https://docs.genymotion.com/Content/04_Tools/Genymotion_Plugin_for_Android_Studio/Installing_the_plugin.htm" target="_blank" rel="noopener">官方</a>提供了两种方式</p>
+<ul>
+<li>JetBrains repository method (recommended)</li>
+<li>Manual method</li>
+</ul>
+<p>手动方式我没找到下载的地方！囧</p>
+<p>我用的是推荐方法：</p>
+<ol>
+<li>启动 Android Studio</li>
+<li>进入 File/Settings</li>
+<li>选择 Plugins 并点击 Browse repositories</li>
+<li>输入genymotion 就会找到</li>
+<li>点击安装</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Tools/">Tools</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://jypeitao.github.io/2016/03/10/genymotion-for-android/" data-title="Android 模拟器 | Peter&#39;s Blog" data-tsina class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2016/03/24/WIFI-exclamation-mark-renewal-timing/" title="WIFI exclamation mark renewal timing">
+  <strong>上一篇：</strong><br>
+  <span>
+  WIFI exclamation mark renewal timing</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/03/08/spp-learn/" title="Serial Port Profile 学习">
+ <strong>下一篇：</strong><br> 
+ <span>Serial Port Profile 学习
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Android/" title="Android">Android<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Bluetooth/" title="Bluetooth">Bluetooth<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Dagger/" title="Dagger">Dagger<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Camera/" title="Camera">Camera<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CMFileManager/" title="CMFileManager">CMFileManager<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CTS/" title="CTS">CTS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Gradle/" title="Gradle">Gradle<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Design-Pattern-SRP/" title="Design Pattern, SRP">Design Pattern, SRP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FPS/" title="FPS">FPS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PTS/" title="PTS">PTS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/WIFI/" title="WIFI">WIFI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Tools/" title="Tools">Tools<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/open-source/" title="open source">open source<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ABI/" title="ABI">ABI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Android-debug/" title="Android debug">Android debug<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/virtualbox/" title="virtualbox">virtualbox<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://android-review.googlesource.com/#/q/status:open" target="_blank" title="Android代码review">Android gerrit</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://android.googlesource.com/" target="_blank" title="Android代码在线查看">Android code</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bbs.pediy.com" target="_blank" title="软件安全方面的论坛">看雪论坛</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.csdn.net/jypeitao" target="_blank" title="我的csdn">CSDN</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.china-pub.com" target="_blank" title="我常买书的地方">China-pub</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m peter from Garmin. <br>
+			This is my blog.</p>
+	</section>
+	 
+	<div class="social-font">
+		
+		
+		<a href="https://github.com/jypeitao" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:jypeitao@163.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019 
+		
+		<a href="/about" target="_blank" title="Peter">Peter</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+        getSize();
+        if (myWidth >= 1024) {
+          c.click();
+        }
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

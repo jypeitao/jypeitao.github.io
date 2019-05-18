@@ -1,0 +1,587 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  
+    <title>Cellular data always active | Peter&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Peter">
+    
+
+    
+    <meta name="description" content="Cellular data always active作用：保持数据连接处于激活状态，以便实现快速切换。打开wifi，打开数据连接，如果没有勾选Cellular data always active，数据流量的网络接口是不存在的。反之，就会看到数据流量的网络接口。wlan0就是wifi连上AP的结果，rmnet_data0就是数据连接。 实现首先从开发者选项中的开关看起。   这里假设用户勾选了该">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cellular data always active">
+<meta property="og:url" content="http://jypeitao.github.io/2016/08/04/Cellular-data-always-active/index.html">
+<meta property="og:site_name" content="Peter&#39;s Blog">
+<meta property="og:description" content="Cellular data always active作用：保持数据连接处于激活状态，以便实现快速切换。打开wifi，打开数据连接，如果没有勾选Cellular data always active，数据流量的网络接口是不存在的。反之，就会看到数据流量的网络接口。wlan0就是wifi连上AP的结果，rmnet_data0就是数据连接。 实现首先从开发者选项中的开关看起。   这里假设用户勾选了该">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://jypeitao.github.io/imgs/Cellular-data-always-active/aa.jpg">
+<meta property="og:image" content="http://jypeitao.github.io/imgs/Cellular-data-always-active/SequenceDiagram1.jpg">
+<meta property="og:image" content="http://jypeitao.github.io/imgs/Cellular-data-always-active/diagram.png">
+<meta property="og:image" content="http://jypeitao.github.io/imgs/Cellular-data-always-active/SequenceDiagram2.jpg">
+<meta property="og:image" content="http://jypeitao.github.io/imgs/Cellular-data-always-active/networkinfo.jpg">
+<meta property="og:image" content="http://jypeitao.github.io/imgs/Cellular-data-always-active/NetworkFactorys.jpg">
+<meta property="og:image" content="http://jypeitao.github.io/imgs/Cellular-data-always-active/reques_network.jpg">
+<meta property="og:image" content="http://jypeitao.github.io/imgs/Cellular-data-always-active/aggressiveHandover.jpg">
+<meta property="og:image" content="http://jypeitao.github.io/imgs/Cellular-data-always-active/1469518020474.png">
+<meta property="og:updated_time" content="2019-05-18T14:20:35.110Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cellular data always active">
+<meta name="twitter:description" content="Cellular data always active作用：保持数据连接处于激活状态，以便实现快速切换。打开wifi，打开数据连接，如果没有勾选Cellular data always active，数据流量的网络接口是不存在的。反之，就会看到数据流量的网络接口。wlan0就是wifi连上AP的结果，rmnet_data0就是数据连接。 实现首先从开发者选项中的开关看起。   这里假设用户勾选了该">
+<meta name="twitter:image" content="http://jypeitao.github.io/imgs/Cellular-data-always-active/aa.jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Peter&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Peter&#39;s Blog" title="Peter&#39;s Blog"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Peter&#39;s Blog">Peter&#39;s Blog</a></h1>
+				<h2 class="blog-motto">Talk is cheap, show me the code.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页|Home</a></li>
+					
+						<li><a href="/archives">归档|Archives</a></li>
+					
+						<li><a href="/about">简介|About</a></li>
+					
+					<li>
+ 					
+					
+					</li>
+				</ul>
+			</ul></nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/08/04/Cellular-data-always-active/" title="Cellular data always active" itemprop="url">Cellular data always active</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Peter" target="_blank" itemprop="author">Peter</a>
+		
+  </p><p class="article-time">
+    <time datetime="2016-08-04T06:22:30.000Z" itemprop="datePublished"> 发表于 2016-08-04</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Cellular-data-always-active"><span class="toc-number">1.</span> <span class="toc-text">Cellular data always active</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#作用：保持数据连接处于激活状态，以便实现快速切换。"><span class="toc-number">1.1.</span> <span class="toc-text">作用：保持数据连接处于激活状态，以便实现快速切换。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现"><span class="toc-number">1.2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.3.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Aggressive-WLAN-to-Cellular-handover"><span class="toc-number">2.</span> <span class="toc-text">Aggressive WLAN to Cellular handover</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#作用：系统会在WLAN信号较弱时，主动将网络模式从WLAN网络切换到移动网络"><span class="toc-number">2.1.</span> <span class="toc-text">作用：系统会在WLAN信号较弱时，主动将网络模式从WLAN网络切换到移动网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现-1"><span class="toc-number">2.2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结-1"><span class="toc-number">2.3.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Always-allow-WLAN-Roam-Scans"><span class="toc-number">3.</span> <span class="toc-text">Always allow WLAN Roam Scans</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#作用：一律运行WLAN漫游扫描"><span class="toc-number">3.1.</span> <span class="toc-text">作用：一律运行WLAN漫游扫描</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现-2"><span class="toc-number">3.2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结-2"><span class="toc-number">3.3.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="Cellular-data-always-active"><a href="#Cellular-data-always-active" class="headerlink" title="Cellular data always active"></a>Cellular data always active</h1><h2 id="作用：保持数据连接处于激活状态，以便实现快速切换。"><a href="#作用：保持数据连接处于激活状态，以便实现快速切换。" class="headerlink" title="作用：保持数据连接处于激活状态，以便实现快速切换。"></a>作用：保持数据连接处于激活状态，以便实现快速切换。</h2><p>打开wifi，打开数据连接，如果没有勾选Cellular data always active，数据流量的网络接口是不存在的。<br>反之，就会看到数据流量的网络接口。<br><img src="/imgs/Cellular-data-always-active/aa.jpg" alt><br>wlan0就是wifi连上AP的结果，rmnet_data0就是数据连接。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>首先从开发者选项中的开关看起。</p>
+<p><img src="/imgs/Cellular-data-always-active/SequenceDiagram1.jpg" alt></p>
+<p> 这里假设用户勾选了该选项 enable 值为true。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handleMobileDataAlwaysOn</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">boolean</span> enable = (Settings.Global.getInt(</span><br><span class="line">                mContext.getContentResolver(), Settings.Global.MOBILE_DATA_ALWAYS_ON, <span class="number">0</span>) == <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">boolean</span> isEnabled = (mNetworkRequests.get(mDefaultMobileDataRequest) != <span class="keyword">null</span>);</span><br><span class="line">        <span class="keyword">if</span> (enable == isEnabled) &#123;</span><br><span class="line">            <span class="keyword">return</span>;  <span class="comment">// Nothing to do.</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (enable) &#123;</span><br><span class="line">            handleRegisterNetworkRequest(<span class="keyword">new</span> NetworkRequestInfo(</span><br><span class="line">                  <span class="keyword">null</span>, mDefaultMobileDataRequest, <span class="keyword">new</span> Binder(), NetworkRequestInfo.REQUEST));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            handleReleaseNetworkRequest(mDefaultMobileDataRequest, Process.SYSTEM_UID);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>mDefaultMobileDataRequest是在ConnectivityService 实例化的时候创建。<br>从注释中可以看出它的用途，keep mobile data active。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Request used to optionally keep mobile data active even when higher</span></span><br><span class="line">    <span class="comment">// priority networks like Wi-Fi are active.</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> NetworkRequest mDefaultMobileDataRequest;</span><br></pre></td></tr></table></figure></p>
+<p>NetworkRequest 是个什么类？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Defines a request for a network, made through &#123;<span class="doctag">@link</span> NetworkRequest.Builder&#125; and used</span></span><br><span class="line"><span class="comment"> * to request a network via &#123;<span class="doctag">@link</span> ConnectivityManager#requestNetwork&#125; or listen for changes</span></span><br><span class="line"><span class="comment"> * via &#123;<span class="doctag">@link</span> ConnectivityManager#registerNetworkCallback&#125;.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NetworkRequest</span> <span class="keyword">implements</span> <span class="title">Parcelable</span> </span>&#123;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/imgs/Cellular-data-always-active/diagram.png" alt></p>
+<p>下面看一下handleRegisterNetworkRequest的实现。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handleRegisterNetworkRequest</span><span class="params">(NetworkRequestInfo nri)</span> </span>&#123;</span><br><span class="line">        mNetworkRequests.put(nri.request, nri);</span><br><span class="line">        mNetworkRequestInfoLogs.log(<span class="string">"REGISTER "</span> + nri);</span><br><span class="line">        <span class="keyword">if</span> (!nri.isRequest) &#123;</span><br><span class="line">            <span class="keyword">for</span> (NetworkAgentInfo network : mNetworkAgentInfos.values()) &#123;</span><br><span class="line">                <span class="keyword">if</span> (nri.request.networkCapabilities.hasSignalStrength() &amp;&amp;</span><br><span class="line">                        network.satisfiesImmutableCapabilitiesOf(nri.request)) &#123;</span><br><span class="line">                    updateSignalStrengthThresholds(network, <span class="string">"REGISTER"</span>, nri.request);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        rematchAllNetworksAndRequests(<span class="keyword">null</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">if</span> (nri.isRequest &amp;&amp; mNetworkForRequestId.get(nri.request.requestId) == <span class="keyword">null</span>) &#123;</span><br><span class="line">            sendUpdatedScoreToFactories(nri.request, <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>实现中的nri.request 就是上面的mDefaultMobileDataRequest。 可以看到mDefaultMobileDataRequest被放入mNetworkRequests中。nri.isRequest就是NetworkRequestInfo.REQUEST ，值是true。<br>接着就会执行一个很关键的函数，rematchAllNetworksAndRequests。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Attempt to rematch all Networks with NetworkRequests.  This may result in Networks</span></span><br><span class="line"><span class="comment">    * being disconnected.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> changed If only one Network's score or capabilities have been modified since the </span></span><br><span class="line"><span class="comment">    *       last time this function was called, pass this Network in this argument, otherwise </span></span><br><span class="line"><span class="comment">    *       pass null.</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> oldScore If only one Network has been changed but its NetworkCapabilities have </span></span><br><span class="line"><span class="comment">    *       not changed, pass in the Network's score (from getCurrentScore()) prior to the </span></span><br><span class="line"><span class="comment">    *       change via this argument, otherwise pass &#123;<span class="doctag">@code</span> changed.getCurrentScore()&#125; or </span></span><br><span class="line"><span class="comment">    *       0 if &#123;<span class="doctag">@code</span> changed&#125; is &#123;<span class="doctag">@code</span> null&#125;. This is because NetworkCapabilities </span></span><br><span class="line"><span class="comment">    *       influence a network's score.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">rematchAllNetworksAndRequests</span><span class="params">(NetworkAgentInfo changed, <span class="keyword">int</span> oldScore)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">if</span> (changed != <span class="keyword">null</span> &amp;&amp; oldScore &lt; changed.getCurrentScore()) &#123;</span><br><span class="line">           rematchNetworkAndRequests(changed, ReapUnvalidatedNetworks.REAP);</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           <span class="keyword">final</span> NetworkAgentInfo[] nais = mNetworkAgentInfos.values().toArray(</span><br><span class="line">                   <span class="keyword">new</span> NetworkAgentInfo[mNetworkAgentInfos.size()]);</span><br><span class="line">           <span class="comment">// Rematch higher scoring networks first to prevent requests first matching a lower</span></span><br><span class="line">           <span class="comment">// scoring network and then a higher scoring network, which could produce multiple</span></span><br><span class="line">           <span class="comment">// callbacks and inadvertently unlinger networks.</span></span><br><span class="line">           Arrays.sort(nais);</span><br><span class="line">           <span class="keyword">for</span> (NetworkAgentInfo nai : nais) &#123;</span><br><span class="line">               rematchNetworkAndRequests(nai,</span><br><span class="line">                       <span class="comment">// Only reap the last time through the loop.  Reaping before all </span></span><br><span class="line">                       <span class="comment">// rematching is complete could incorrectly teardown a network </span></span><br><span class="line">                       <span class="comment">// that hasn't yet been rematched.</span></span><br><span class="line">                       (nai != nais[nais.length-<span class="number">1</span>]) ? ReapUnvalidatedNetworks.DONT_REAP</span><br><span class="line">                               : ReapUnvalidatedNetworks.REAP);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>值得注意的是，这里的nais是一个score降序排列。第一次看到这里肯定想知道mNetworkAgentInfos是从哪里来的。</p>
+<p><img src="/imgs/Cellular-data-always-active/SequenceDiagram2.jpg" alt></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * A Utility class for handling for communicating between bearer-specific</span></span><br><span class="line"><span class="comment"> * code and ConnectivityService.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * A bearer may have more than one NetworkAgent if it can simultaneously</span></span><br><span class="line"><span class="comment"> * support separate networks (IMS / Internet / MMS Apns on cellular, or</span></span><br><span class="line"><span class="comment"> * perhaps connections with different SSID or P2P for Wi-Fi).</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@hide</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">NetworkAgent</span> <span class="keyword">extends</span> <span class="title">Handler</span> </span>&#123;</span><br></pre></td></tr></table></figure>
+<p>NetworkAgent是一个abstract类，需要具体子类。它继承Handler，本质上就是一个Handler。</p>
+<p>在下面这些文件中有NetworkAgent的子类：<br> Vpn.java<br> DataConnection.java<br> WifiStateMachine.java<br> EthernetNetworkFactory.java<br> BluetoothTetheringNetworkFactory.java</p>
+<p>这里先不去跟踪具体的NetworkAgent初始化流程了。回头看rematchAllNetworksAndRequests。<br>因为这里假设的情况是，先打开数据连接，然后打开wifi连接一个热点，mNetworkAgentInfos中只有一个元素。下面就是一个实际的例子</p>
+<p><img src="/imgs/Cellular-data-always-active/networkinfo.jpg" alt></p>
+<p>接下来一步是sendUpdatedScoreToFactories。</p>
+<p><img src="/imgs/Cellular-data-always-active/NetworkFactorys.jpg" alt></p>
+<p>高通项目实现了QtiDctController ,所以在看代码的时候，有些函数是在QtiDctController.java 文件中。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QtiDctController</span> <span class="keyword">extends</span> <span class="title">DctController</span> </span>&#123;</span><br></pre></td></tr></table></figure></p>
+<p>sendUpdatedScoreToFactories中利用AsyncChannel通知各个NetWorkFactories。</p>
+<p><img src="/imgs/Cellular-data-always-active/reques_network.jpg" alt></p>
+<p>经过上面的流程，modem端就做好了准备， 状态机DataConnection的状态会InactiveState -&gt;ActivatingState-&gt;ActiveState.</p>
+<p>在进入ActiveState的时候，会实例化DcNetworkAgent，<strong>DcNetworkAgent的父类就是NetworkAgent</strong>，然后执行<strong>registerNetworkAgent</strong>函数。</p>
+<p>下面看看ConnectivityService.java 中的实现<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">registerNetworkAgent</span><span class="params">(Messenger messenger, NetworkInfo networkInfo,</span></span></span><br><span class="line"><span class="function"><span class="params">            LinkProperties linkProperties, NetworkCapabilities networkCapabilities,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">int</span> currentScore, NetworkMisc networkMisc)</span> </span>&#123;</span><br><span class="line">        enforceConnectivityInternalPermission();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Instead of passing mDefaultRequest, provide an API to determine whether a Network</span></span><br><span class="line">        <span class="comment">// satisfies mDefaultRequest.</span></span><br><span class="line">        <span class="keyword">final</span> NetworkAgentInfo nai = <span class="keyword">new</span> NetworkAgentInfo(messenger, <span class="keyword">new</span> AsyncChannel(),</span><br><span class="line">                <span class="keyword">new</span> Network(reserveNetId()), <span class="keyword">new</span> NetworkInfo(networkInfo), <span class="keyword">new</span> LinkProperties(</span><br><span class="line">                linkProperties), <span class="keyword">new</span> NetworkCapabilities(networkCapabilities), currentScore,</span><br><span class="line">                mContext, mTrackerHandler, <span class="keyword">new</span> NetworkMisc(networkMisc), mDefaultRequest, <span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">            nai.networkMonitor.systemReady = mSystemReady;</span><br><span class="line">        &#125;</span><br><span class="line">        addValidationLogs(nai.networkMonitor.getValidationLogs(), nai.network);</span><br><span class="line">        <span class="keyword">if</span> (DBG) log(<span class="string">"registerNetworkAgent "</span> + nai);</span><br><span class="line">        mHandler.sendMessage(mHandler.obtainMessage(EVENT_REGISTER_NETWORK_AGENT, nai));</span><br><span class="line">        <span class="keyword">return</span> nai.network.netId;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>实例化NetworkAgentInfo ，封装了Messenger，NetworInfo，currentScore等数据。<br>EVENT_REGISTER_NETWORK_AGENT的处理还是在ConnectivityService.java 中，handleRegisterNetworkAgent。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handleRegisterNetworkAgent</span><span class="params">(NetworkAgentInfo na)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (VDBG) log(<span class="string">"Got NetworkAgent Messenger"</span>);</span><br><span class="line">        mNetworkAgentInfos.put(na.messenger, na);</span><br><span class="line">        <span class="keyword">synchronized</span> (mNetworkForNetId) &#123;</span><br><span class="line">            mNetworkForNetId.put(na.network.netId, na);</span><br><span class="line">        &#125;</span><br><span class="line">        na.asyncChannel.connect(mContext, mTrackerHandler, na.messenger);</span><br><span class="line">        NetworkInfo networkInfo = na.networkInfo;</span><br><span class="line">        na.networkInfo = <span class="keyword">null</span>;</span><br><span class="line">        updateNetworkInfo(na, networkInfo);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>多线程，mTrackerHandler是在另一个线程中处理，na.asyncChannel.connect会发一个CMD_CHANNEL_HALF_CONNECTED的消息，mTrackerHandler中处理。同时函数updateNetworkInfo被另外线程调用。</p>
+<p>直接看下重要的函数<strong>updateNetworkInfo</strong>的部分代码。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">updateNetworkInfo</span><span class="params">(NetworkAgentInfo networkAgent, NetworkInfo newInfo)</span> </span>&#123;</span><br><span class="line">       ...</span><br><span class="line">        <span class="keyword">if</span> (state == NetworkInfo.State.CONNECTED &amp;&amp; !networkAgent.created) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// This should never fail.  Specifying an already in use NetID will cause failure.</span></span><br><span class="line">                <span class="keyword">if</span> (networkAgent.isVPN()) &#123;</span><br><span class="line">                    mNetd.createVirtualNetwork(</span><br><span class="line">                      networkAgent.network.netId,</span><br><span class="line">                      !networkAgent.linkProperties.getDnsServers().isEmpty(),</span><br><span class="line">                      (networkAgent.networkMisc == <span class="keyword">null</span> ||</span><br><span class="line">                       !networkAgent.networkMisc.allowBypass)</span><br><span class="line">                    );</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    mNetd.createPhysicalNetwork(</span><br><span class="line">                      networkAgent.network.netId,</span><br><span class="line">                      networkAgent.networkCapabilities.hasCapability(</span><br><span class="line">                        NET_CAPABILITY_NOT_RESTRICTED) ?</span><br><span class="line">                      <span class="keyword">null</span> : NetworkManagementService.PERMISSION_SYSTEM</span><br><span class="line">                    );</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                loge(<span class="string">"Error creating network "</span> + networkAgent.network.netId + <span class="string">": "</span></span><br><span class="line">                     + e.getMessage());</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            networkAgent.created = <span class="keyword">true</span>;</span><br><span class="line">            updateLinkProperties(networkAgent, <span class="keyword">null</span>);</span><br><span class="line">            notifyIfacesChanged();</span><br><span class="line">            ...</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (state == NetworkInfo.State.DISCONNECTED) &#123;</span><br><span class="line">            networkAgent.asyncChannel.disconnect();</span><br><span class="line">            <span class="keyword">if</span> (networkAgent.isVPN()) &#123;</span><br><span class="line">                <span class="keyword">synchronized</span> (mProxyLock) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (mDefaultProxyDisabled) &#123;</span><br><span class="line">                        mDefaultProxyDisabled = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">if</span> (mGlobalProxy == <span class="keyword">null</span> &amp;&amp; mDefaultProxy != <span class="keyword">null</span>) &#123;</span><br><span class="line">                            sendProxyBroadcast(mDefaultProxy);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>重要的是通过Netd去创建物理网络，更新连接属性。<br>至此，实现流程基本就看完了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>打开wifi 连上AP 并且打开数据连接，勾选Cellular data always active，此时数据连接依然是激活的。</p>
+<p>当断开wifi的时候，也会走到<strong>updateNetworkInfo</strong>，能够迅速切换到数据连接。因为和RIL沟通，连接状态的改变等耗时的操作已经完成了。只需要把wifi连接断开就可以了。</p>
+<p>关于断开wifi ，切换到数据流量流程请参考：<br><a href="http://blog.csdn.net/u010961631/article/details/48629601" target="_blank" rel="noopener">http://blog.csdn.net/u010961631/article/details/48629601</a></p>
+<h1 id="Aggressive-WLAN-to-Cellular-handover"><a href="#Aggressive-WLAN-to-Cellular-handover" class="headerlink" title="Aggressive WLAN to Cellular handover"></a>Aggressive WLAN to Cellular handover</h1><h2 id="作用：系统会在WLAN信号较弱时，主动将网络模式从WLAN网络切换到移动网络"><a href="#作用：系统会在WLAN信号较弱时，主动将网络模式从WLAN网络切换到移动网络" class="headerlink" title="作用：系统会在WLAN信号较弱时，主动将网络模式从WLAN网络切换到移动网络"></a>作用：系统会在WLAN信号较弱时，主动将网络模式从WLAN网络切换到移动网络</h2><p>实际上，WIFI和数据流量的自动切换始于L版本，系统总是使用得分高的网络。<br>英文版本的描述更准确些：</p>
+<blockquote>
+<p>When enabled,WLAN will be more aggressive in handing over the data connection to Cellular, when WLAN signal is low</p>
+</blockquote>
+<h2 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h2><p>还是先从开发者选项看起。<br><img src="/imgs/Cellular-data-always-active/aggressiveHandover.jpg" alt></p>
+<p>调用了一个API，透过binder，改变了WifiStateMachine中的一个变量值。仅此而已。<br>被用到的地方有一处，在下面这个函数中<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">calculateWifiScore</span><span class="params">(WifiLinkLayerStats stats)</span> </span>&#123;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/imgs/Cellular-data-always-active/1469518020474.png" alt></p>
+<p>可以看到，这里故意减少RSSI (received signal strength indication)，使得<a href="http://10.120.10.100:9002/Network_score" target="_blank" rel="noopener">网络评分</a>的时候得分较小，进而切换到数据网络。</p>
+<p>calculateWifiScore的调用地方也只有一处。</p>
+<p>当状态机处于L2ConnectedState状态的时候，简单说来就是wifi已经连上网了<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Connected at 802.11 (L2) level */</span></span><br><span class="line"><span class="keyword">private</span> State mL2ConnectedState = <span class="keyword">new</span> L2ConnectedState();</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">case</span> CMD_RSSI_POLL:</span><br><span class="line">     <span class="keyword">if</span> (message.arg1 == mRssiPollToken) &#123;</span><br><span class="line">         <span class="keyword">if</span> (mWifiConfigStore.enableChipWakeUpWhenAssociated.get()) &#123;</span><br><span class="line">             WifiLinkLayerStats stats = getWifiLinkLayerStats(VDBG);</span><br><span class="line">             <span class="keyword">if</span> (stats != <span class="keyword">null</span>) &#123;</span><br><span class="line">                 <span class="keyword">if</span> (mWifiInfo.getRssi() != WifiInfo.INVALID_RSSI</span><br><span class="line">                                        &amp;&amp; (stats.rssi_mgmt == <span class="number">0</span></span><br><span class="line">                                        || stats.beacon_rx == <span class="number">0</span>)) &#123;</span><br><span class="line">                     stats = <span class="keyword">null</span>;</span><br><span class="line">                 &#125;</span><br><span class="line">             &#125;</span><br><span class="line">             fetchRssiLinkSpeedAndFrequencyNative();</span><br><span class="line">             calculateWifiScore(stats);</span><br><span class="line">         &#125;</span><br><span class="line">         sendMessageDelayed(obtainMessage(CMD_RSSI_POLL,</span><br><span class="line">                            mRssiPollToken, <span class="number">0</span>), POLL_RSSI_INTERVAL_MSECS);</span><br><span class="line">     &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">         <span class="comment">// Polling has completed</span></span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+<p>从上面的代码可以看出来，这里是个循环，不断的发送消息CMD_RSSI_POLL，不断的calculateWifiScore。除非状态机的状态发生了变化。</p>
+<p>计算分数干啥？</p>
+<p>calculateWifiScore根据wifi情况，动态修改分数，wifi的信号越弱，分数越低。</p>
+<p>之前说过，这个feature就是故意减少wifi信号强度值。 假设本来强度还可以，得分能到50分，结果故意减少信号强度值，最后得分就只有40了。同时假设数据流量网络得分是45分。因为40比45分小，故切换网络。</p>
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><p>这个功能有啥用处？<br>可能就是一个优化方向吧。除非WLAN状况非常好，否则还是用移动数据好了。</p>
+<p>Cellular data always active也有尽量用移动数据的意思在里面。</p>
+<p>这其中更深层次的意义我还没理解到。</p>
+<p>参考链接：<br><a href="http://android.stackexchange.com/questions/90250/what-does-the-aggressive-wi-fi-to-cellular-handover-option-in-developer-settin" target="_blank" rel="noopener">http://android.stackexchange.com/questions/90250/what-does-the-aggressive-wi-fi-to-cellular-handover-option-in-developer-settin</a><br><a href="http://blog.csdn.net/u010961631/article/details/48970107" target="_blank" rel="noopener">http://blog.csdn.net/u010961631/article/details/48970107</a></p>
+<h1 id="Always-allow-WLAN-Roam-Scans"><a href="#Always-allow-WLAN-Roam-Scans" class="headerlink" title="Always allow WLAN Roam Scans"></a>Always allow WLAN Roam Scans</h1><h2 id="作用：一律运行WLAN漫游扫描"><a href="#作用：一律运行WLAN漫游扫描" class="headerlink" title="作用：一律运行WLAN漫游扫描"></a>作用：一律运行WLAN漫游扫描</h2><h2 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h2><p>这个实现和Aggressive WLAN to Cellular handover极为相似，最终影响的变量是alwaysEnableScansWhileAssociated。</p>
+<p>被用到的地方也只有一处，也是在L2ConnectedState状态中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">case</span> CMD_START_SCAN:</span><br><span class="line">      ... </span><br><span class="line">      <span class="keyword">if</span> (mWifiInfo.txSuccessRate &gt; mWifiConfigStore.maxTxPacketForPartialScans</span><br><span class="line">              || mWifiInfo.rxSuccessRate &gt; mWifiConfigStore.maxRxPacketForPartialScans) &#123;</span><br><span class="line">          <span class="comment">// Don't scan if lots of packets are being sent</span></span><br><span class="line">          restrictChannelList = <span class="keyword">true</span>;</span><br><span class="line">          <span class="keyword">if</span> (mWifiConfigStore.alwaysEnableScansWhileAssociated.get() == <span class="number">0</span>) &#123;</span><br><span class="line">              messageHandlingStatus = MESSAGE_HANDLING_STATUS_REFUSED;</span><br><span class="line">              <span class="keyword">return</span> HANDLED;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      ...</span><br><span class="line">      <span class="comment">// scan</span></span><br></pre></td></tr></table></figure>
+<p>当有大量数据传输的时候，如果在执行扫描，性能肯定有影响，所以直接返回了。</p>
+<blockquote>
+<p>Don’t scan if lots of packets are being sent</p>
+</blockquote>
+<h2 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h2><p>这个feature有啥作用？ 没什么用吧！ </p>
+<p><a href="https://android.googlesource.com/platform/frameworks/opt/net/wifi/+/c6f06c628ee3583b60ff31a7da442e0ac7b26d97%5E%21/service/java/com/android/server/wifi/WifiStateMachine.java" target="_blank" rel="noopener">https://android.googlesource.com/platform/frameworks/opt/net/wifi/+/c6f06c628ee3583b60ff31a7da442e0ac7b26d97%5E%21/service/java/com/android/server/wifi/WifiStateMachine.java</a></p>
+<blockquote>
+<p>autojoin tuning, making LTE handover less aggressive<br>Bug: 15700122<br>Change-Id: I2836abf791f8c71c63a901170f247c4030e8e8f9<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">+    <span class="keyword">private</span> <span class="keyword">int</span> mAggressiveHandover = <span class="number">0</span>;</span><br><span class="line">+</span><br><span class="line">+    <span class="function"><span class="keyword">int</span> <span class="title">getAggressiveHandover</span><span class="params">()</span> </span>&#123;</span><br><span class="line">+        <span class="keyword">return</span> mAggressiveHandover;</span><br><span class="line">+    &#125;</span><br><span class="line">+</span><br><span class="line">+    <span class="function"><span class="keyword">void</span> <span class="title">enableAggressiveHandover</span><span class="params">(<span class="keyword">int</span> enabled)</span> </span>&#123;</span><br><span class="line">+        mAggressiveHandover = enabled;</span><br><span class="line">+    &#125;</span><br><span class="line">+</span><br><span class="line">+    <span class="keyword">private</span> <span class="keyword">int</span> mAllowScansWithTraffic = <span class="number">1</span>;</span><br><span class="line">+</span><br><span class="line">+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAllowScansWithTraffic</span><span class="params">(<span class="keyword">int</span> enabled)</span> </span>&#123;</span><br><span class="line">+        mAllowScansWithTraffic = enabled;</span><br><span class="line">+    &#125;</span><br><span class="line">+</span><br><span class="line">+    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAllowScansWithTraffic</span><span class="params">()</span> </span>&#123;</span><br><span class="line">+        <span class="keyword">return</span> mAllowScansWithTraffic;</span><br><span class="line">+    &#125;</span><br><span class="line">+</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>从提交来看，Always allow WLAN Roam Scans和 Always allow WLAN Roam Scans都是这次提交添加的。从commit log来看是在tuning autojoin 功能。</p>
+<p>参考链接：<br><a href="https://supportforums.cisco.com/discussion/12543176/workaround-android-devices-do-not-roam-wifi" target="_blank" rel="noopener">https://supportforums.cisco.com/discussion/12543176/workaround-android-devices-do-not-roam-wifi</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Android/">Android</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://jypeitao.github.io/2016/08/04/Cellular-data-always-active/" data-title="Cellular data always active | Peter&#39;s Blog" data-tsina class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2016/08/11/Gradle-for-android-App/" title="Gradle for android App ">
+  <strong>上一篇：</strong><br>
+  <span>
+  Gradle for android App </span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/06/13/CMFileManager-bug-analysis/" title="CMFileManager bug analysis">
+ <strong>下一篇：</strong><br> 
+ <span>CMFileManager bug analysis
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Android/" title="Android">Android<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Bluetooth/" title="Bluetooth">Bluetooth<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Dagger/" title="Dagger">Dagger<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Camera/" title="Camera">Camera<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CMFileManager/" title="CMFileManager">CMFileManager<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CTS/" title="CTS">CTS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Gradle/" title="Gradle">Gradle<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Design-Pattern-SRP/" title="Design Pattern, SRP">Design Pattern, SRP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FPS/" title="FPS">FPS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PTS/" title="PTS">PTS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/WIFI/" title="WIFI">WIFI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Tools/" title="Tools">Tools<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/open-source/" title="open source">open source<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ABI/" title="ABI">ABI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Android-debug/" title="Android debug">Android debug<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/virtualbox/" title="virtualbox">virtualbox<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://android-review.googlesource.com/#/q/status:open" target="_blank" title="Android代码review">Android gerrit</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://android.googlesource.com/" target="_blank" title="Android代码在线查看">Android code</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bbs.pediy.com" target="_blank" title="软件安全方面的论坛">看雪论坛</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.csdn.net/jypeitao" target="_blank" title="我的csdn">CSDN</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.china-pub.com" target="_blank" title="我常买书的地方">China-pub</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m peter from Garmin. <br>
+			This is my blog.</p>
+	</section>
+	 
+	<div class="social-font">
+		
+		
+		<a href="https://github.com/jypeitao" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:jypeitao@163.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019 
+		
+		<a href="/about" target="_blank" title="Peter">Peter</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+        getSize();
+        if (myWidth >= 1024) {
+          c.click();
+        }
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

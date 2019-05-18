@@ -1,0 +1,564 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  
+    <title>WIFI exclamation mark renewal timing | Peter&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Peter">
+    
+
+    
+    <meta name="description" content="0x00 前言 从Android L开始，当wifi连接之后，系统会尝试去连接google服务器，如果访问成功就表示wifi能上网。如果不能成功访问就会在wifi旁边显示一个感叹号。  不同版本默认的地址不一样Android 6.0  http://connectivitycheck.gstatic.com/generate_204Andorid 5.1  http://connectivityc">
+<meta name="keywords" content="Android,WIFI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WIFI exclamation mark renewal timing">
+<meta property="og:url" content="http://jypeitao.github.io/2016/03/24/WIFI-exclamation-mark-renewal-timing/index.html">
+<meta property="og:site_name" content="Peter&#39;s Blog">
+<meta property="og:description" content="0x00 前言 从Android L开始，当wifi连接之后，系统会尝试去连接google服务器，如果访问成功就表示wifi能上网。如果不能成功访问就会在wifi旁边显示一个感叹号。  不同版本默认的地址不一样Android 6.0  http://connectivitycheck.gstatic.com/generate_204Andorid 5.1  http://connectivityc">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://jypeitao.github.io/imgs/WIFI-exclamation-mark-renewal-timing/updateicon.jpg">
+<meta property="og:image" content="http://jypeitao.github.io/imgs/WIFI-exclamation-mark-renewal-timing/NET_CAPABILITY_VALIDATED.jpg">
+<meta property="og:updated_time" content="2019-05-18T14:20:35.111Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WIFI exclamation mark renewal timing">
+<meta name="twitter:description" content="0x00 前言 从Android L开始，当wifi连接之后，系统会尝试去连接google服务器，如果访问成功就表示wifi能上网。如果不能成功访问就会在wifi旁边显示一个感叹号。  不同版本默认的地址不一样Android 6.0  http://connectivitycheck.gstatic.com/generate_204Andorid 5.1  http://connectivityc">
+<meta name="twitter:image" content="http://jypeitao.github.io/imgs/WIFI-exclamation-mark-renewal-timing/updateicon.jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Peter&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Peter&#39;s Blog" title="Peter&#39;s Blog"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Peter&#39;s Blog">Peter&#39;s Blog</a></h1>
+				<h2 class="blog-motto">Talk is cheap, show me the code.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页|Home</a></li>
+					
+						<li><a href="/archives">归档|Archives</a></li>
+					
+						<li><a href="/about">简介|About</a></li>
+					
+					<li>
+ 					
+					
+					</li>
+				</ul>
+			</ul></nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/03/24/WIFI-exclamation-mark-renewal-timing/" title="WIFI exclamation mark renewal timing" itemprop="url">WIFI exclamation mark renewal timing</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Peter" target="_blank" itemprop="author">Peter</a>
+		
+  </p><p class="article-time">
+    <time datetime="2016-03-24T05:24:17.000Z" itemprop="datePublished"> 发表于 2016-03-24</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x00-前言"><span class="toc-number">1.</span> <span class="toc-text">0x00 前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01-关键代码说明"><span class="toc-number">2.</span> <span class="toc-text">0x01 关键代码说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02-按进程分析该问题"><span class="toc-number">3.</span> <span class="toc-text">0x02 按进程分析该问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x03-行为不正常的分析点"><span class="toc-number">4.</span> <span class="toc-text">0x03 行为不正常的分析点</span></a></li></ol>
+		
+		</div>
+		
+		<h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><hr>
+<p>从Android L开始，当wifi连接之后，系统会尝试去连接google服务器，如果访问成功就表示wifi能上网。<br>如果不能成功访问就会在wifi旁边显示一个感叹号。</p>
+<blockquote>
+<p>不同版本默认的地址不一样<br><strong>Android 6.0</strong>  <a href="http://connectivitycheck.gstatic.com/generate_204" target="_blank" rel="noopener">http://connectivitycheck.gstatic.com/generate_204</a><br><strong>Andorid 5.1</strong>  <a href="http://connectivitycheck.android.com/generate_204" target="_blank" rel="noopener">http://connectivitycheck.android.com/generate_204</a><br><strong>Android 5.0</strong>  <a href="http://clients3.google.com/generate_204" target="_blank" rel="noopener">http://clients3.google.com/generate_204</a></p>
+</blockquote>
+<p>关于这个功能的说明，网上也能找到一大堆啦。</p>
+<p>本文着重写下感叹号更新的流程和时机。</p>
+<h1 id="0x01-关键代码说明"><a href="#0x01-关键代码说明" class="headerlink" title="0x01 关键代码说明"></a>0x01 关键代码说明</h1><hr>
+<p>函数<code>int isCaptivePortal()</code>是用来判断是否能够连接google服务器的函数，连接成功返回204。</p>
+<p>该功能可以通过adb shell来关闭。</p>
+<blockquote>
+<p><strong>adb shell settings put global captive_portal_detection_enabled 0</strong></p>
+</blockquote>
+<p>默认是google的服务器，由于GFW的原因不能成功连接。可以修改这个地址。</p>
+<blockquote>
+<p><strong>adb shell settings put global captive_portal_server <a href="http://www.qualcomm.cn" target="_blank" rel="noopener">www.qualcomm.cn</a> </strong></p>
+</blockquote>
+<p>修改后的地址对应的服务器一定要有<strong>generate_204</strong>，否则会被认为连接失败。</p>
+<p>遇到连接失败，可以先<strong>adb shell settings get global captive_portal_server</strong> 查看下是否有值。<br>如果有值，再确认下是否有<strong>generate_204</strong>。</p>
+<p>函数<code>public NetworkCapabilities[] getDefaultNetworkCapabilitiesForUser(int userId)</code>也很重要，用来获取所有的NetworkCapabilities对象，这些对象记录了是否连接成功。</p>
+<h1 id="0x02-按进程分析该问题"><a href="#0x02-按进程分析该问题" class="headerlink" title="0x02 按进程分析该问题"></a>0x02 按进程分析该问题</h1><hr>
+<p>状态栏图标的显示是由systemui负责的，而是否连接成功由system_server判断。</p>
+<p>状态栏负责显示，不管是连接成功还是失败，总得有人去通知它更新界面。</p>
+<p>最容易想到的方式是在通知状态栏更新图标的时候把需要目前的状态一起传递给systemui。</p>
+<p>实际实现是system_server通知需要更新图标状态，由systemui主动获取获取连接情况，再更加连接情况来决定是否显示感叹号。</p>
+<p> <strong>systemui</strong><br> systemui通过监听广播事件<code>ConnectivityManager.CONNECTIVITY_ACTION</code>和<code>ConnectivityManager.INET_CONDITION_ACTION</code>来得到图标更新请求。</p>
+<p>之前也提到，更新成什么图标，是根据连接状态来的，连接状态是通过<code>getDefaultNetworkCapabilitiesForUser</code>从ConnectivityService拿到的NetworkCapabilities对象中获取的。</p>
+<p><img src="/imgs/WIFI-exclamation-mark-renewal-timing/updateicon.jpg" alt></p>
+<p>注意上图最右边的<code>getCurrentIconId</code>和<code>inetConditon</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCurrentIconId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mCurrentState.connected) &#123;</span><br><span class="line">            <span class="keyword">return</span> getIcons().mSbIcons[mCurrentState.inetCondition][mCurrentState.level];</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (mCurrentState.enabled) &#123;</span><br><span class="line">            <span class="keyword">return</span> getIcons().mSbDiscState;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> getIcons().mSbNullState;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p> <strong>system_server</strong><br>ConnectivityService类发送广播通知systemui更新状态。</p>
+<p>NetworkMonitor类中的<code>isCaptivePortal</code>是很关键的一个函数。故从这里开始讲起。</p>
+<p>每一个NetworkAgentInfo实例持有一个NetworkMonitor对象。NetworkMonitor本质是一个状态机。<br>关于NetworkAgentInfo，代码中有如下注释：</p>
+<blockquote>
+</blockquote>
+<p> A bag class used by ConnectivityService for holding a collection of most recent<br> information published by a particular NetworkAgent as well as the<br> AsyncChannel/messenger for reaching that NetworkAgent and lists of NetworkRequests<br> interested in using it.  Default sort order is descending by score.</p>
+<p>NetworkAgentInfo和NetworkMonitor本文不做详细介绍。</p>
+<p>只要知道，在wifi连接之后，状态机切换到<code>EvaluatingState</code>，在这个状态调用<code>isCaptivePortal</code>。<br>如果<code>isCaptivePortal</code>返回204就表示连接成功，进入新状态<code>ValidatedState</code></p>
+<p>这个状态很简单，贴一下代码。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">ValidatedState</span> <span class="keyword">extends</span> <span class="title">State</span> </span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">enter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            mConnectivityServiceHandler.sendMessage(obtainMessage(EVENT_NETWORK_TESTED,</span><br><span class="line">                    NETWORK_TEST_RESULT_VALID, <span class="number">0</span>, mNetworkAgentInfo));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">processMessage</span><span class="params">(Message message)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">switch</span> (message.what) &#123;</span><br><span class="line">                <span class="keyword">case</span> CMD_NETWORK_CONNECTED:</span><br><span class="line">                    transitionTo(mValidatedState);</span><br><span class="line">                    <span class="keyword">return</span> HANDLED;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    <span class="keyword">return</span> NOT_HANDLED;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/imgs/WIFI-exclamation-mark-renewal-timing/NET_CAPABILITY_VALIDATED.jpg" alt></p>
+<h1 id="0x03-行为不正常的分析点"><a href="#0x03-行为不正常的分析点" class="headerlink" title="0x03 行为不正常的分析点"></a>0x03 行为不正常的分析点</h1><p>如果出现了图标的显示和预期不一致，检测点如下：</p>
+<ol>
+<li><p><code>NetworkControllerImpl.java</code>的<code>void onReceive(Context context, Intent intent)</code>有没有收到广播<code>ConnectivityManager.CONNECTIVITY_ACTION</code>或者<code>ConnectivityManager.INET_CONDITION_ACTION</code>。</p>
+</li>
+<li><p><code>NetworkControllerImpl.java</code>的<code>updateConnectivity</code>有没有符合期望的<code>mValidatedTransports</code>。</p>
+</li>
+<li><p><code>NetworkMonitor</code>的<code>isCaptivePortal</code>是否有被调用。</p>
+</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Android/">Android</a><a href="/tags/WIFI/">WIFI</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://jypeitao.github.io/2016/03/24/WIFI-exclamation-mark-renewal-timing/" data-title="WIFI exclamation mark renewal timing | Peter&#39;s Blog" data-tsina class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2016/06/07/CTS-sensor-code-learn/" title="CTS sensor code learn">
+  <strong>上一篇：</strong><br>
+  <span>
+  CTS sensor code learn</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/03/10/genymotion-for-android/" title="Android 模拟器">
+ <strong>下一篇：</strong><br> 
+ <span>Android 模拟器
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Android/" title="Android">Android<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Bluetooth/" title="Bluetooth">Bluetooth<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Dagger/" title="Dagger">Dagger<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Camera/" title="Camera">Camera<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CMFileManager/" title="CMFileManager">CMFileManager<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CTS/" title="CTS">CTS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Gradle/" title="Gradle">Gradle<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Design-Pattern-SRP/" title="Design Pattern, SRP">Design Pattern, SRP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FPS/" title="FPS">FPS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PTS/" title="PTS">PTS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/WIFI/" title="WIFI">WIFI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Tools/" title="Tools">Tools<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/open-source/" title="open source">open source<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ABI/" title="ABI">ABI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Android-debug/" title="Android debug">Android debug<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/virtualbox/" title="virtualbox">virtualbox<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://android-review.googlesource.com/#/q/status:open" target="_blank" title="Android代码review">Android gerrit</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://android.googlesource.com/" target="_blank" title="Android代码在线查看">Android code</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bbs.pediy.com" target="_blank" title="软件安全方面的论坛">看雪论坛</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.csdn.net/jypeitao" target="_blank" title="我的csdn">CSDN</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.china-pub.com" target="_blank" title="我常买书的地方">China-pub</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m peter from Garmin. <br>
+			This is my blog.</p>
+	</section>
+	 
+	<div class="social-font">
+		
+		
+		<a href="https://github.com/jypeitao" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:jypeitao@163.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019 
+		
+		<a href="/about" target="_blank" title="Peter">Peter</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+        getSize();
+        if (myWidth >= 1024) {
+          c.click();
+        }
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

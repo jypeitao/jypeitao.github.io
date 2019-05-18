@@ -1,0 +1,566 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  
+    <title>Gradle for android App  | Peter&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Peter">
+    
+
+    
+    <meta name="description" content="1、gradle 支持sdkman安装 curl -s https://get.sdkman.io | bashsdk install gradle 2.14.1  构建工具:  构建功能是基础 依赖管理是核心 IDE集成是本分 扩展任务是前景 环境管理是情怀  Ant -&amp;gt; Maven -&amp;gt; Gradle 2、GradleGradle Wrapper实现了工具自管理，是有情怀的表现。">
+<meta name="keywords" content="Gradle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gradle for android App ">
+<meta property="og:url" content="http://jypeitao.github.io/2016/08/11/Gradle-for-android-App/index.html">
+<meta property="og:site_name" content="Peter&#39;s Blog">
+<meta property="og:description" content="1、gradle 支持sdkman安装 curl -s https://get.sdkman.io | bashsdk install gradle 2.14.1  构建工具:  构建功能是基础 依赖管理是核心 IDE集成是本分 扩展任务是前景 环境管理是情怀  Ant -&amp;gt; Maven -&amp;gt; Gradle 2、GradleGradle Wrapper实现了工具自管理，是有情怀的表现。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-18T14:20:35.110Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gradle for android App ">
+<meta name="twitter:description" content="1、gradle 支持sdkman安装 curl -s https://get.sdkman.io | bashsdk install gradle 2.14.1  构建工具:  构建功能是基础 依赖管理是核心 IDE集成是本分 扩展任务是前景 环境管理是情怀  Ant -&amp;gt; Maven -&amp;gt; Gradle 2、GradleGradle Wrapper实现了工具自管理，是有情怀的表现。">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Peter&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Peter&#39;s Blog" title="Peter&#39;s Blog"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Peter&#39;s Blog">Peter&#39;s Blog</a></h1>
+				<h2 class="blog-motto">Talk is cheap, show me the code.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页|Home</a></li>
+					
+						<li><a href="/archives">归档|Archives</a></li>
+					
+						<li><a href="/about">简介|About</a></li>
+					
+					<li>
+ 					
+					
+					</li>
+				</ul>
+			</ul></nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/08/11/Gradle-for-android-App/" title="Gradle for android App " itemprop="url">Gradle for android App </a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Peter" target="_blank" itemprop="author">Peter</a>
+		
+  </p><p class="article-time">
+    <time datetime="2016-08-11T09:35:46.000Z" itemprop="datePublished"> 发表于 2016-08-11</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<h1 id="1、gradle-支持sdkman安装"><a href="#1、gradle-支持sdkman安装" class="headerlink" title="1、gradle 支持sdkman安装"></a>1、gradle 支持sdkman安装</h1><blockquote>
+<p>curl -s <a href="https://get.sdkman.io" target="_blank" rel="noopener">https://get.sdkman.io</a> | bash<br>sdk install gradle 2.14.1</p>
+</blockquote>
+<p>构建工具:</p>
+<ul>
+<li>构建功能是基础</li>
+<li>依赖管理是核心</li>
+<li>IDE集成是本分</li>
+<li>扩展任务是前景</li>
+<li>环境管理是情怀</li>
+</ul>
+<p><strong>Ant -&gt; Maven -&gt; Gradle</strong></p>
+<h1 id="2、Gradle"><a href="#2、Gradle" class="headerlink" title="2、Gradle"></a>2、Gradle</h1><p><a href="https://docs.gradle.org/current/userguide/gradle_wrapper.html" target="_blank" rel="noopener">Gradle Wrapper</a>实现了工具自管理，是有情怀的表现。</p>
+<blockquote>
+<p>gradlew<br>gradlew.bat<br> gradle/wrapper/<br> gradle-wrapper.jar<br> gradle-wrapper.properties</p>
+</blockquote>
+<p>上述文件建议用版本管理工具管理起来。</p>
+<ul>
+<li>方便没有安装Gradle的机器使用</li>
+<li>wrapper可以定制，尽管一般情况下没有做定制</li>
+<li>gradle-wrapper.properties中记录了Gradle的版本信息</li>
+</ul>
+<p>可以通过命令生成：</p>
+<blockquote>
+<p>gradle wrapper –gradle-version XXX</p>
+</blockquote>
+<p>涉及的配置文件</p>
+<ol>
+<li>settings.gradle</li>
+<li>build.gradle</li>
+<li>gradle.properties</li>
+<li>local.properties</li>
+</ol>
+<p><strong>settings.gradle</strong></p>
+<blockquote>
+<p>The <strong>settings.gradle</strong> file, located in the root project directory, tells Gradle which modules it should include when building your app. </p>
+</blockquote>
+<p><strong>build.gradle</strong></p>
+<blockquote>
+<p>The <strong>top-level build.gradle</strong> file, located in the root project directory, defines build configurations that apply to all modules in your project. By default, the top-level build file uses the buildscript {} block to define the Gradle repositories and dependencies that are common to all modules in the project. </p>
+</blockquote>
+<blockquote>
+<p>The <strong>module-level build.gradle</strong> file, located in each  &lt; project &gt;/&lt; module &gt;/ directory, allows you to configure build settings for the specific module it is located in. </p>
+</blockquote>
+<p><strong>gradle.properties</strong></p>
+<blockquote>
+<p>This is where you can configure project-wide Gradle settings, such as the Gradle daemon’s maximum heap size. For more information, see <a href="https://docs.gradle.org/current/userguide/build_environment.html" target="_blank" rel="noopener">Configuring the build environment</a>.</p>
+</blockquote>
+<p><strong>local.properties</strong></p>
+<blockquote>
+<p>Configures local environment properties for the build system, such as the path to the SDK installation.</p>
+</blockquote>
+<p>上面4个文件，除了local.properties，都应该提交到版本管理仓库。</p>
+<p><strong>.gitignore</strong>的配置可以直接在github上拿一个Android项目的默认配置。不过默认没把<strong>.idea/*</strong>去掉，需要添加。</p>
+<h1 id="3、github上新建一个Android项目"><a href="#3、github上新建一个Android项目" class="headerlink" title="3、github上新建一个Android项目"></a>3、github上新建一个Android项目</h1><ul>
+<li><p>Create a new repository<br>在github上新建一个项目，添加好.gitignore ，选择好license。</p>
+</li>
+<li><p>Android studio 新建工程<br>找到AS新建的工程目录，执行<strong>git init</strong>，然后<strong>git remote add origin  XXXXX &amp;&amp; git remote update</strong><br>最后 <strong>git checkout master</strong><br>配置好.gitignore, 提交到github，初始化工作就算完成了。</p>
+</li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Gradle/">Gradle</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://jypeitao.github.io/2016/08/11/Gradle-for-android-App/" data-title="Gradle for android App  | Peter&#39;s Blog" data-tsina class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2016/09/02/Dagger-lerning/" title="Dagger lerning">
+  <strong>上一篇：</strong><br>
+  <span>
+  Dagger lerning</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/08/04/Cellular-data-always-active/" title="Cellular data always active">
+ <strong>下一篇：</strong><br> 
+ <span>Cellular data always active
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Android/" title="Android">Android<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Bluetooth/" title="Bluetooth">Bluetooth<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Dagger/" title="Dagger">Dagger<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Camera/" title="Camera">Camera<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CMFileManager/" title="CMFileManager">CMFileManager<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CTS/" title="CTS">CTS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Gradle/" title="Gradle">Gradle<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Design-Pattern-SRP/" title="Design Pattern, SRP">Design Pattern, SRP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/FPS/" title="FPS">FPS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/PTS/" title="PTS">PTS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/WIFI/" title="WIFI">WIFI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Tools/" title="Tools">Tools<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/open-source/" title="open source">open source<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ABI/" title="ABI">ABI<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Android-debug/" title="Android debug">Android debug<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/virtualbox/" title="virtualbox">virtualbox<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://android-review.googlesource.com/#/q/status:open" target="_blank" title="Android代码review">Android gerrit</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://android.googlesource.com/" target="_blank" title="Android代码在线查看">Android code</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bbs.pediy.com" target="_blank" title="软件安全方面的论坛">看雪论坛</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.csdn.net/jypeitao" target="_blank" title="我的csdn">CSDN</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.china-pub.com" target="_blank" title="我常买书的地方">China-pub</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m peter from Garmin. <br>
+			This is my blog.</p>
+	</section>
+	 
+	<div class="social-font">
+		
+		
+		<a href="https://github.com/jypeitao" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:jypeitao@163.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019 
+		
+		<a href="/about" target="_blank" title="Peter">Peter</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+        getSize();
+        if (myWidth >= 1024) {
+          c.click();
+        }
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
